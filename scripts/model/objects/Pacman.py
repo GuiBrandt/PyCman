@@ -1,4 +1,6 @@
 from .GameObject import GameObject
 
 class Pacman(GameObject):
-    pass
+    
+    def __init__(self):
+        pass
