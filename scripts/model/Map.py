@@ -21,7 +21,7 @@ class Map:
         'o':    Tile.BONUS
     }
 
-    def __init__(filename):
+    def __init__(self, filename):
         """
             Construtor
 
@@ -29,32 +29,32 @@ class Map:
         """
 
         file = io.open(filename, "r")
-        __width, __height = map(int, file.readline().split())
+        self.__width, self.__height = map(int, file.readline().split())
         
-        __map = ""
-        for i in range(__height):
-            __map += file.readline().rstrip("\n\r")
+        self.__map = ""
+        for i in range(self.__height):
+            self.__map += file.readline().rstrip("\n\r")
 
-    def __get_tile_at(x, y):
+    def __get_tile_at(self, x, y):
         """
             Obtém o tipo de tile em uma posição no mapa
 
             x, y    : Coordenadas no mapa
         """
-        return __map[y * __width + x]
+        return self.__map[y * self.__width + x]
 
-    def is_passable(x, y):
+    def is_passable(self, x, y):
         """
             Determina se uma posição no mapa é passável
         
             x, y    : Coordenadas no mapa
         """
-        return __get_tile_at(x, y).lower() != 'x'
+        return self.__get_tile_at(x, y).lower() != 'x'
 
-    def get_tile(x, y):
+    def get_tile(self, x, y):
         """
             Obtém o tipo de tile numa posição do mapa
 
             x, y    : Coordenadas no mapa
         """
-        return __TILE_DICT[__get_tile_at(x, y)]
+        return Map.__TILE_DICT[self.__get_tile_at(x, y)]
