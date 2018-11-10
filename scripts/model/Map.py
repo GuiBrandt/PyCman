@@ -14,11 +14,11 @@ class Map:
 
     # Mapa de caracteres do arquivo para tipos de tile
     __TILE_DICT = {
-        '\'':   Tile.EMPTY,
-        's':    Tile.WALL_S,
-        'd':    Tile.WALL_D,
-        '.':    Tile.POINT,
-        'o':    Tile.BONUS
+        '/': Tile.EMPTY,
+        's': Tile.WALL_S,
+        'd': Tile.WALL_D,
+        '.': Tile.POINT,
+        'o': Tile.BONUS
     }
 
     def __init__(self, filename):
@@ -28,10 +28,10 @@ class Map:
             filename    : Nome do arquivo de passabilidade do mapa
         """
 
-        file = io.open(filename, "r")
+        file = io.open(filename, 'r')
         self.__width, self.__height = map(int, file.readline().split())
         
-        self.__map = ""
+        self.__map = ''
         for i in range(self.__height):
             self.__map += file.readline().rstrip("\n\r")
 
