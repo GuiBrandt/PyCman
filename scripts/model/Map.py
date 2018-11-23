@@ -1,4 +1,4 @@
-import io
+import io, os, pygame
 from enum import Enum
 
 class Map:
@@ -7,18 +7,16 @@ class Map:
     class Tile(Enum):
         """Enumeração de tipos de tile no mapa"""
         EMPTY = 0
-        WALL_S = 2
-        WALL_D = 3
-        POINT = 4
-        BONUS = 5
+        POINT = 1
+        BONUS = 2
+        WALL = 3
 
     # Mapa de caracteres do arquivo para tipos de tile
     __TILE_DICT = {
         '/': Tile.EMPTY,
-        's': Tile.WALL_S,
-        'd': Tile.WALL_D,
         '.': Tile.POINT,
-        'o': Tile.BONUS
+        'o': Tile.BONUS,
+        'x': Tile.WALL
     }
 
     def __init__(self, filename):
@@ -28,7 +26,7 @@ class Map:
             filename    : Nome do arquivo de passabilidade do mapa
         """
 
-        file = io.open(filename, 'r')
+        file = io.open(os.path.join('assets/', filename), 'r')
         self.__width, self.__height = map(int, file.readline().split())
         
         self.__map = ''

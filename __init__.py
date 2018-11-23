@@ -1,6 +1,5 @@
 import sys, pygame
 
-from scripts.controller.GameManager     import GameManager
 from scripts.controller.InputManager    import InputManager
 from scripts.controller.SceneManager    import SceneManager
 
@@ -9,7 +8,6 @@ WINDOW_SIZE = (224 * 2, 288 * 2 + 32)
 
 if __name__ == "__main__":
     pygame.init()
-    GameManager.init()
 
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
