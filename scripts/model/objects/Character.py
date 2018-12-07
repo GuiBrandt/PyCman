@@ -25,12 +25,6 @@ class Character(GameObject):
 	def update(self, map):
 		super().update(map)
 
-		self.move(
-			map,
-			self._movement_speed * self._dir_x_component(self._direction),
-			self._movement_speed * self._dir_y_component(self._direction)
-		)
-
 		if InputManager.key_state(pygame.K_UP):
 			self._desired_direction = 4
 		elif InputManager.key_state(pygame.K_DOWN):
@@ -43,12 +37,25 @@ class Character(GameObject):
 		if self.can_turn(map, self._desired_direction):
 			self._direction = self._desired_direction
 
-	def can_turn(self, map, d):
-		dx = self._dir_x_component(d) * self._movement_speed
-		dy = self._dir_y_component(d) * self._movement_speed
-		x2, y2 = int(round(self.real_x + dx)), int(round(self.real_y + dy))
+		self.move(
+			map,
+			self._movement_speed * self._dir_x_component(self._direction),
+			self._movement_speed * self._dir_y_component(self._direction)
+		)
 
-		return map.is_passable(x2, y2)
+	def can_turn(self, map, d):
+		x2, y2 = self.adjust_xy(self.real_x, self.real_y)
+
+		if not map.is_passable(x2, y2):
+			return True
+		
+		dx = self._dir_x_component(d)
+		dy = self._dir_y_component(d)
+
+		ax = 0.75 if self._direction == 2 else 0
+		ay = 0.75 if self._direction == 4 else 0
+
+		return map.is_passable(int(self.real_x + ax + dx), int(self.real_y + ay + dy))
 
 	def _dir_x_component(self, d):
 		if d == 0:
@@ -66,11 +73,22 @@ class Character(GameObject):
 		else:
 			return 0
 
-	def move(self, map, x, y):
-		dx = self._dir_x_component(self._direction) * self._movement_speed
-		dy = self._dir_y_component(self._direction) * self._movement_speed
-		x2, y2 = int(round(self.real_x + dx)), int(round(self.real_y + dy))
+	def adjust_xy(self, x, y, d = None):
+		d = self._direction if d is None else d
 
+		dx = self._dir_x_component(d) * self._movement_speed
+		dy = self._dir_y_component(d) * self._movement_speed
+
+		if dx > 0:
+			dx += 0.75
+		
+		if dy > 0:
+			dy += 0.75
+
+		return int(x + dx), int(y + dy)
+
+	def move(self, map, x, y):
+		x2, y2 = self.adjust_xy(self.real_x, self.real_y)
 		if not map.is_passable(x2, y2):
 			return
 
@@ -88,4 +106,4 @@ class Character(GameObject):
 		elif self.real_y > 31:
 			self.real_y -= 31
 
-		self.x, self.y = int(round(self.real_x)), int(round(self.real_y))
+		self.x, self.y = int(self.real_x), int(self.real_y)
