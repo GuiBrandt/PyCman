@@ -48,7 +48,7 @@ class GameScene(SceneBase):
         self._player.update(self._map)
 
         for ghost in self._ghosts:
-            ghost.update(self._map)
+            ghost.update(self._map, self._player)
 
     def render(self, screen):
         self._spriteset.render(screen)

@@ -48,6 +48,8 @@ class Character(GameObject):
 
 		if not map.is_passable(x2, y2):
 			return True
+		elif d & 4 == self._direction & 4:
+			return False
 		
 		dx = self._dir_x_component(d)
 		dy = self._dir_y_component(d)

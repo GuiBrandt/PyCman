@@ -9,7 +9,7 @@ class Spriteset_Map:
     def __init__(self, player, _map, ghosts):
         self._player = CharacterSprite(player)
         self._map = Tilemap('wallSprite.dat', _map)
-        self._ghosts = map(lambda g: CharacterSprite(player), ghosts)
+        self._ghosts = list(map(lambda g: CharacterSprite(g), ghosts))
         self._hud = HUD(player)
 
     def render(self, screen):
