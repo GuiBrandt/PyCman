@@ -44,7 +44,10 @@ class Character(GameObject):
 			self._direction = self._desired_direction
 
 	def can_turn(self, map, d):
-		x2, y2 = self.adjust_xy(d)
+		dx = self._dir_x_component(d) * self._movement_speed
+		dy = self._dir_y_component(d) * self._movement_speed
+		x2, y2 = int(round(self.real_x + dx)), int(round(self.real_y + dy))
+
 		return map.is_passable(x2, y2)
 
 	def _dir_x_component(self, d):
@@ -63,14 +66,11 @@ class Character(GameObject):
 		else:
 			return 0
 
-	def adjust_xy(self, d):
-		dx = self._dir_x_component(d) * self._movement_speed
-		dy = self._dir_y_component(d) * self._movement_speed
-
-		return int(round(self.real_x + dx)), int(round(self.real_y + dy))
-
 	def move(self, map, x, y):
-		x2, y2 = self.adjust_xy(self._direction)
+		dx = self._dir_x_component(self._direction) * self._movement_speed
+		dy = self._dir_y_component(self._direction) * self._movement_speed
+		x2, y2 = int(round(self.real_x + dx)), int(round(self.real_y + dy))
+
 		if not map.is_passable(x2, y2):
 			return
 
@@ -87,3 +87,5 @@ class Character(GameObject):
 			self.real_y += 31
 		elif self.real_y > 31:
 			self.real_y -= 31
+
+		self.x, self.y = int(round(self.real_x)), int(round(self.real_y))
