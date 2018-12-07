@@ -8,6 +8,7 @@ WINDOW_SIZE = (224 * 2, 288 * 2 + 32)
 
 if __name__ == "__main__":
     pygame.init()
+    SceneManager.init()
 
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
@@ -19,5 +20,8 @@ if __name__ == "__main__":
             elif event.type == pygame.KEYUP:    InputManager.key_up(event.key)
 
         screen.fill(WINDOW_BG_COLOR)
+        
+        SceneManager.update()
         SceneManager.render(screen)
+
         pygame.display.flip()

@@ -1,9 +1,14 @@
 from ..model.Map import Map
 from ..view.Tilemap import Tilemap
+from ..model.scenes.GameScene import GameScene
 
 class SceneManager:
     
+    def init():
+        SceneManager._scene = GameScene()
+
     def render(screen):
-        map = Map('map.dat')
-        tile_map = Tilemap('wallSprite.dat', map)
-        tile_map.draw(screen, (0, 58))
+        SceneManager._scene.render(screen)
+
+    def update():
+        SceneManager._scene.update()

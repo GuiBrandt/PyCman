@@ -28,6 +28,7 @@ class Tilemap:
             self.__wall_sprite += file.readline().rstrip("\n\r")
 
         self.__tile_sprite = pygame.image.load(os.path.join('assets/', Tilemap.TILESET_SPRITE))
+        self.__frame = 0
 
     def __get_wall_info(self, x, y):
         """
@@ -67,10 +68,13 @@ class Tilemap:
         else:
             return (int(cell.value) * Tilemap.TILE_SIZE, 2 * Tilemap.TILE_SIZE, 0)
 
-    def draw(self, screen, offset):
+    def render(self, screen, offset):
         """
             Desenhar o mapa de acordo com o arquivo da classe Map
         """
+        self.__frame += 1
+        self.__frame %= 2
+        
         for x in range(0, self.__width):
             for y in range(0, self.__height):
                 tile_info = self.__get_tile_info(x, y)

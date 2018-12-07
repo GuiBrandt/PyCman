@@ -39,7 +39,19 @@ class Map:
 
             x, y    : Coordenadas no mapa
         """
-        return self.__map[y * self.__width + x]
+        index = (y % self.__height) * self.__width + (x % self.__width)
+        return self.__map[index] if index > 0 and index < len(self.__map) else '/'
+
+    def set_tile_at(self, x, y, tile):
+        """
+            Obtém o tipo de tile em uma posição no mapa
+
+            x, y    : Coordenadas no mapa
+        """
+        index = y * self.__width + x
+        tile_char = dict(map(reversed, Map.__TILE_DICT.items()))[tile]
+
+        self.__map = self.__map[:index] + tile_char + self.__map[index+1:]
 
     def is_passable(self, x, y):
         """
