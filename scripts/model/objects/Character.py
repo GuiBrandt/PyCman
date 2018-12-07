@@ -1,7 +1,5 @@
 import pygame
 import math
-
-from ...controller.InputManager import InputManager
 from .GameObject import GameObject
 
 class Character(GameObject):
@@ -11,7 +9,7 @@ class Character(GameObject):
 		self._direction = 0
 		self._desired_direction = 0
 
-		self._movement_speed = 0.05
+		self._movement_speed = 0.1
 
 		self.real_x = self.real_y = 0.0
 		self.x = self.y = 0
@@ -24,15 +22,6 @@ class Character(GameObject):
 
 	def update(self, map):
 		super().update(map)
-
-		if InputManager.key_state(pygame.K_UP):
-			self._desired_direction = 4
-		elif InputManager.key_state(pygame.K_DOWN):
-			self._desired_direction = 6
-		elif InputManager.key_state(pygame.K_LEFT):
-			self._desired_direction = 2
-		elif InputManager.key_state(pygame.K_RIGHT):
-			self._desired_direction = 0
 
 		if self.can_turn(map, self._desired_direction):
 			self._direction = self._desired_direction

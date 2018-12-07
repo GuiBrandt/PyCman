@@ -11,7 +11,7 @@ class GameObject:
 		return event in self._handlers
 
 	def _trigger(self, event):
-		if has_handler(event):
+		if self.has_handler(event):
 			self._handlers[event]()
 
 	def update(self, map):

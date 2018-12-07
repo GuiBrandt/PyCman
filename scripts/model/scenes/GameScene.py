@@ -1,5 +1,8 @@
 from .SceneBase import SceneBase
 
+from ...controller.AudioManager import AudioManager
+from ...controller.AudioManager import Sound
+
 from ..objects.Pacman import Pacman
 
 from ..objects.ghosts.Blinky    import Blinky
@@ -11,6 +14,9 @@ from ..Map import Map
 
 from ...view.CharacterSprite import CharacterSprite
 from ...view.Spriteset_Map import Spriteset_Map
+
+from .TitleScene import TitleScene
+from ...controller import SceneManager
 
 class GameScene(SceneBase):
 
@@ -42,13 +48,26 @@ class GameScene(SceneBase):
         self._spriteset = Spriteset_Map(self._player, self._map, self._ghosts)
 
     def _pacman_died(self):
-        pass
+        AudioManager.play_sound(Sound.DIE_SOUND)
+        SceneManager.SceneManager.call(TitleScene)
 
     def update(self):
         self._player.update(self._map)
 
         for ghost in self._ghosts:
             ghost.update(self._map, self._player)
+            
+            if self._player.power:
+                ghost.set_running_sprite()
+            else:
+                ghost.set_normal_sprite()
+
+            if ghost.x == self._player.x and ghost.y == self._player.y and not self._player.power:
+                self._player.kill()
+            elif ghost.x == self._player.x and ghost.y == self._player.y and self._player.power:
+                ghost.set_dead_sprite()
+                pass
+
 
     def render(self, screen):
         self._spriteset.render(screen)

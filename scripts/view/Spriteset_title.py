@@ -24,7 +24,4 @@ class Spriteset_title:
 		else:
 			textsurface = myfont.render('About', True, (255, 255, 255))
 
-		screen.blit(textsurface,(300, 304))
-
-
-		
+		screen.blit(textsurface,(200, 404))

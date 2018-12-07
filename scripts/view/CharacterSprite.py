@@ -18,9 +18,14 @@ class CharacterSprite:
 	def render(self, screen, offset):
 		self.frame_number += 1
 		self.frame_number %= CharacterSprite.ANIM_RATE
-
-		y_pos = self._character.get_sprite_index() * CharacterSprite.SPRITE_SIZE
+		
+		sIndex = self._character.get_sprite_index()
+		y_pos = sIndex * CharacterSprite.SPRITE_SIZE
 		x_pos = (self._character.get_direction() + (self.frame_number > CharacterSprite.ANIM_RATE / 2 - 1)) * CharacterSprite.SPRITE_SIZE
+		
+		if sIndex == 1:
+			y_pos = sIndex * CharacterSprite.SPRITE_SIZE
+			x_pos = ((self.frame_number / 2 )) * CharacterSprite.SPRITE_SIZE
 
 		tile = pygame.Surface((CharacterSprite.SPRITE_SIZE, CharacterSprite.SPRITE_SIZE))
 		tile.blit(self.__char_sprite, (0, 0), (x_pos, y_pos, CharacterSprite.SPRITE_SIZE, CharacterSprite.SPRITE_SIZE))

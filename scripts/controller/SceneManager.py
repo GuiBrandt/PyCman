@@ -6,14 +6,14 @@ from ..model.scenes.TitleScene import TitleScene
 class SceneManager:
     
     def init():
-        #SceneManager._scene = TitleScene()
-        SceneManager._scene = GameScene()
+        SceneManager._scene = TitleScene()
+        #SceneManager._scene = GameScene()
     
-    def call(scene):
-        SceneManager._scene = scene()
-
     def render(screen):
         SceneManager._scene.render(screen)
+
+    def call(scene):
+        SceneManager._scene = scene()
 
     def update():
         SceneManager._scene.update()
